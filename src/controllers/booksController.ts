@@ -2,6 +2,7 @@ import { BookData } from "../models/bookDataSchema";
 import { Request, Response } from "express";
 import { bookModel } from "../models/bookDataSchema";
 
+// adds a new book to the database
 export async function addBook(req: Request, res: Response) {
   try {
     const book: BookData = new bookModel(req.body);
@@ -12,6 +13,7 @@ export async function addBook(req: Request, res: Response) {
   }
 }
 
+// get all books from the database
 export async function getAllBooks(req: Request, res: Response) {
   try {
     const books: BookData[] = await bookModel.find();
@@ -21,6 +23,7 @@ export async function getAllBooks(req: Request, res: Response) {
   }
 }
 
+// get a specific book from the database by giving id as params
 export async function getBookByID(req: Request, res: Response) {
   try {
     const book: BookData | null = await bookModel.findById(req.params.id);
@@ -34,6 +37,7 @@ export async function getBookByID(req: Request, res: Response) {
   }
 }
 
+// delete a books from the database by providing id
 export async function deleteBookByID(req: Request, res: Response) {
   try {
     const book: BookData | null = await bookModel.findByIdAndDelete(
@@ -49,6 +53,7 @@ export async function deleteBookByID(req: Request, res: Response) {
   }
 }
 
+// update specific details of a book by providing id
 export async function updateBookByID(req: Request, res: Response) {
   try {
     const book: BookData | null = await bookModel.findByIdAndUpdate(

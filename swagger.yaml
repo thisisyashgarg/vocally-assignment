@@ -1,0 +1,159 @@
+openapi: 3.0.0
+info:
+  title: Vocally Assignment API
+  description: A simple API for books - Yash Garg
+  version: 1.0.0
+
+servers:
+  - url: http://localhost:5432
+    description: Base URL
+
+components:
+  securitySchemes:
+    BasicAuth:
+      type: http
+      scheme: basic
+    BearerAuth:
+      type: http
+      scheme: bearer
+
+paths:
+  /books:
+    get:
+      summary: returns details of all books in the database
+      responses:
+        "200":
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  title:
+                    type: string
+                  author:
+                    type: string
+                  description:
+                    type: string
+                  publisher:
+                    type: string
+                  publicationDate:
+                    type: string
+
+    post:
+      summary: adds a new book to the database
+      requestBody:
+        required: true
+        content:
+          application/x-www-form-urlencoded:
+            schema:
+              type: object
+              properties:
+                title:
+                  type: string
+                author:
+                  type: string
+                description:
+                  type: string
+                publisher:
+                  type: string
+                publicationDate:
+                  type: string
+              required:
+                - title
+                - author
+      responses:
+        "200":
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  title:
+                    type: string
+                  author:
+                    type: string
+                  description:
+                    type: string
+                  publisher:
+                    type: string
+                  publicationDate:
+                    type: string
+
+  /books/{id}:
+    get:
+      summary: returns details of book with the given id
+      parameters:
+        - name: id
+          default: "64042e7f2790228874a2dfc0"
+          in: path
+          schema:
+            type: string
+      responses:
+        "200":
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  title:
+                    type: string
+                  author:
+                    type: string
+                  description:
+                    type: string
+                  publisher:
+                    type: string
+                  publicationDate:
+                    type: string
+    delete:
+      summary: deletes details of the book with the given id
+      parameters:
+        - name: id
+          in: path
+          schema:
+            type: string
+      responses:
+        "200":
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: string
+                properties:
+                  message: "Book deleted succesfully"
+    put:
+      summary: updates details of the book with the given id
+      parameters:
+        - name: id
+          in: path
+          schema:
+            type: string
+      requestBody:
+        required: true
+        content:
+          application/x-www-form-urlencoded:
+            schema:
+              type: object
+              properties:
+                title:
+                  type: string
+                author:
+                  type: string
+                description:
+                  type: string
+                publisher:
+                  type: string
+                publicationDate:
+                  type: string
+      responses:
+        "200":
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: string
+                properties:
+                  message: "Book deleted succesfully"

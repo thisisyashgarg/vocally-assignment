@@ -6,6 +6,7 @@ import bookRoutes from "./routes/Books";
 import { config } from "dotenv";
 config();
 
+//establishing a secure connection with mongodb
 mongoose
   .connect(
     `mongodb+srv://yashg:${process.env.MONGODB_PASSWORD}@cluster0.3awaay3.mongodb.net/books?retryWrites=true&w=majority`
@@ -17,9 +18,14 @@ mongoose
     console.log("error connecting to db", err);
   });
 
+//creating an express instance
 const app = express();
 const port = 5432;
+
+// allow app to accept json data
 app.use(bodyParser.json());
+
+//middleware to accept form data
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(cors());
 
