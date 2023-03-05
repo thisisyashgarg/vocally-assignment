@@ -4,6 +4,7 @@ import cors from "cors";
 import mongoose from "mongoose";
 import bookRoutes from "./routes/Books";
 import { config } from "dotenv";
+import limiter from "./services/rateLimiter";
 config();
 
 //establishing a secure connection with mongodb
@@ -29,7 +30,8 @@ app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(cors());
 
-app.use("/books", bookRoutes);
+// limiter is rate limiting the api requests
+app.use("/books", limiter, bookRoutes);
 
 app.listen(port, () => {
   console.log(`Server is listening on port ${port}`);

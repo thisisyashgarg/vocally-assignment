@@ -1,12 +1,14 @@
 import { BookData } from "../models/bookDataSchema";
 import { Request, Response } from "express";
 import { bookModel } from "../models/bookDataSchema";
+import messageEmitter from "../services/messageEmitter";
 
 // adds a new book to the database
 export async function addBook(req: Request, res: Response) {
   try {
     const book: BookData = new bookModel(req.body);
     await book.save();
+    messageEmitter("bookAdded", `Book with id ${book.id} has been added`);
     res.status(201).json(book);
   } catch (err: unknown) {
     res.status(500).json({ error: err });
@@ -17,6 +19,7 @@ export async function addBook(req: Request, res: Response) {
 export async function getAllBooks(req: Request, res: Response) {
   try {
     const books: BookData[] = await bookModel.find();
+    messageEmitter("allBooksFetched", `All books have been fetched`);
     res.json(books);
   } catch (err: unknown) {
     res.status(500).json({ error: err });
@@ -28,6 +31,7 @@ export async function getBookByID(req: Request, res: Response) {
   try {
     const book: BookData | null = await bookModel.findById(req.params.id);
     if (book) {
+      messageEmitter("foundTheBook", `Book with id ${book.id} has been found`);
       res.json(book);
     } else {
       res.status(404).json({ error: "Book not found" });
@@ -44,6 +48,7 @@ export async function deleteBookByID(req: Request, res: Response) {
       req.params.id
     );
     if (book) {
+      messageEmitter("bookDeleted", `Book with id ${book.id} has been deleted`);
       res.json({ message: "Book deleted successfully" });
     } else {
       res.status(404).json({ error: "Book not found" });
@@ -62,6 +67,7 @@ export async function updateBookByID(req: Request, res: Response) {
       { new: true }
     );
     if (book) {
+      messageEmitter("bookUpdated", `Book with id ${book.id} has been updated`);
       res.json(book);
     } else {
       res.status(404).json({ error: "Book not found" });
