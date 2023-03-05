@@ -6,15 +6,9 @@ import bookRoutes from "./routes/Books";
 import { config } from "dotenv";
 config();
 
-const app = express();
-const port = 5432;
-app.use(bodyParser.json());
-app.use(bodyParser.urlencoded({ extended: true }));
-app.use(cors());
-
 mongoose
   .connect(
-    `mongodb+srv://yashgarg:${process.env.MONGODB_PASSWORD}@cluster0.8owg4di.mongodb.net/test?retryWrites=true&w=majority`
+    `mongodb+srv://yashg:${process.env.MONGODB_PASSWORD}@cluster0.3awaay3.mongodb.net/books?retryWrites=true&w=majority`
   )
   .then(() => {
     console.log("connected to db");
@@ -22,6 +16,12 @@ mongoose
   .catch((err) => {
     console.log("error connecting to db", err);
   });
+
+const app = express();
+const port = 5432;
+app.use(bodyParser.json());
+app.use(bodyParser.urlencoded({ extended: true }));
+app.use(cors());
 
 app.use("/books", bookRoutes);
 

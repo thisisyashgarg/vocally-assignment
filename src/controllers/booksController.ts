@@ -1,7 +1,6 @@
 import { BookData } from "../models/bookDataSchema";
 import { Request, Response } from "express";
 import { bookModel } from "../models/bookDataSchema";
-import { Error } from "mongoose";
 
 export async function addBook(req: Request, res: Response) {
   try {
