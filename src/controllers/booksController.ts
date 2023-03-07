@@ -8,7 +8,7 @@ export async function addBook(req: Request, res: Response) {
   try {
     const book: BookData = new bookModel(req.body);
     await book.save();
-    messageEmitter("bookAdded", `Book with id ${book.id} has been added`);
+    messageEmitter("bookAdded", `Book with id ${book.id} has been added`); //this will emit the message to console
     res.status(201).json(book);
   } catch (err: unknown) {
     res.status(500).json({ error: err });
@@ -19,7 +19,7 @@ export async function addBook(req: Request, res: Response) {
 export async function getAllBooks(req: Request, res: Response) {
   try {
     const books: BookData[] = await bookModel.find();
-    messageEmitter("allBooksFetched", `All books have been fetched`);
+    messageEmitter("allBooksFetched", `All books have been fetched`); //this will emit the message to consol
     res.json(books);
   } catch (err: unknown) {
     res.status(500).json({ error: err });
@@ -31,7 +31,7 @@ export async function getBookByID(req: Request, res: Response) {
   try {
     const book: BookData | null = await bookModel.findById(req.params.id);
     if (book) {
-      messageEmitter("foundTheBook", `Book with id ${book.id} has been found`);
+      messageEmitter("foundTheBook", `Book with id ${book.id} has been found`); //this will emit the message to consol
       res.json(book);
     } else {
       res.status(404).json({ error: "Book not found" });
@@ -48,7 +48,7 @@ export async function deleteBookByID(req: Request, res: Response) {
       req.params.id
     );
     if (book) {
-      messageEmitter("bookDeleted", `Book with id ${book.id} has been deleted`);
+      messageEmitter("bookDeleted", `Book with id ${book.id} has been deleted`); //this will emit the message to consol
       res.json({ message: "Book deleted successfully" });
     } else {
       res.status(404).json({ error: "Book not found" });
@@ -67,7 +67,7 @@ export async function updateBookByID(req: Request, res: Response) {
       { new: true }
     );
     if (book) {
-      messageEmitter("bookUpdated", `Book with id ${book.id} has been updated`);
+      messageEmitter("bookUpdated", `Book with id ${book.id} has been updated`); //this will emit the message to consol
       res.json(book);
     } else {
       res.status(404).json({ error: "Book not found" });
