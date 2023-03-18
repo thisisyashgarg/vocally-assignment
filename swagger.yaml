@@ -1,7 +1,7 @@
 openapi: 3.0.0
 info:
-  title: Vocally Assignment API
-  description: A simple API for books - Yash Garg
+  title: Book Management API
+  description: A simple API for book management - Yash Garg
   version: 1.0.0
 
 servers:
